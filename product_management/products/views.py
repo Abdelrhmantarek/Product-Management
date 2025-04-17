@@ -43,11 +43,38 @@ def product_delete(request, pk):
     return render(request, 'products/product_delete.html', {'product': product})
 
 
+
 # API views
+# List all products or create a new one
+"""
+ProductListAPIView
+Inherits from generics.ListCreateAPIView, which gives you:
+GET /products/ → List all products
+POST /products/ → Create a new product
+queryset: Defines which data to retrieve (all products)
+serializer_class: Says which serializer to use
+"""
 class ProductListAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+"""
+View
+│
+├── queryset → The data it grabs from the database
+│
+└── serializer_class → The instructions for converting that data to/from JSON
+"""
+
+# Retrieve, update or delete a single product
+"""
+ProductDetailAPIView
+Inherits from generics.RetrieveUpdateDestroyAPIView, which gives you:
+GET /products/<id>/ → Retrieve one product
+PUT /products/<id>/ or PATCH /products/<id>/ → Update a product
+DELETE /products/<id>/ → Delete a product
+Same structure: queryset + serializer_class
+"""
 class ProductDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
